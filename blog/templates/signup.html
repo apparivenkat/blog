@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-7 text-white">
+    <h3 class='text-white my-5'>Become An Author</h3>
+
+    {% if form.non_field_errors %}
+        {% for err in form.non_field_errors %}
+            <b class='alert alert-danger my-3'>{{err}}</b>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+            {% for f in form %}
+                {{f.label_tag}}
+                {{f}}
+                <small class='text-warning'>{{f.errors|striptags}}</small>
+                <br>
+            {% endfor %}
+        <input type="submit" class='btn btn-primary' value="Signup">
+    </form>
+    <a href="{% url 'login' %}">Login</a>
+    {% if messages %}
+        {% for m in messages %}
+            <b {% if m.tags %} class="alert alert-{{m.tags}} mb-3" {% endif %} >{{m}}</b>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+</div>
+{% endblock content %}

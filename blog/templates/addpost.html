@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block msg %}
+    {% if messages %}
+        {% for m in messages %}
+        <b {% if m.tags %} class="alert alert-{{m.tags}} alert-dismissable fade show" role='alert' {% endif %} >
+            <strong>{{m}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {% endfor %}
+        </b>
+    {% else %}
+    {% endif %}
+{% endblock msg %}
+
+{% block content %}
+<div class="col-sm-10">
+    <h3 class="text-white my-5">Dashboard / Add Post</h3>
+
+    {% if form.non_field_errors %}
+        {% for err in form.non_field_errors %}
+            {{err}}
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+    <form action="" method="post" class="text-white" novalidate>
+        {% csrf_token %}
+        {% for f in form %}
+            {{f.label_tag}}
+            {{f}}
+            {{f.errors|striptags}}
+            <br><br>
+        {% endfor %}
+        <input type="submit" class='btn btn-success' value="Add Post">
+        <button type="reset" class="btn btn-primary" >Reset</button>
+        <button type="reset" class='btn btn-danger'><a href="{% url 'dashboard' %}">Cancel</a></button>
+    </form>
+    <a href="{% url 'dashboard' %} ">Dashboard</a>
+
+</div>
+{% endblock content %}
